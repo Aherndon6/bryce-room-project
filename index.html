@@ -1,0 +1,1814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bryce's Room Project</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0a0a0f;
+  --surface: #111118;
+  --card: #18181f;
+  --card2: #1e1e28;
+  --border: #2c2c3a;
+  --border2: #3a3a4e;
+  --green: #22d3a0;
+  --green-dim: rgba(34,211,160,0.12);
+  --green-border: rgba(34,211,160,0.25);
+  --blue: #60a5fa;
+  --blue-dim: rgba(96,165,250,0.12);
+  --blue-border: rgba(96,165,250,0.25);
+  --yellow: #fbbf24;
+  --yellow-dim: rgba(251,191,36,0.12);
+  --yellow-border: rgba(251,191,36,0.25);
+  --orange: #f97316;
+  --orange-dim: rgba(249,115,22,0.12);
+  --orange-border: rgba(249,115,22,0.25);
+  --pink: #e879f9;
+  --pink-dim: rgba(232,121,249,0.12);
+  --pink-border: rgba(232,121,249,0.25);
+  --red: #f87171;
+  --red-dim: rgba(248,113,113,0.12);
+  --red-border: rgba(248,113,113,0.25);
+  --teal: #2dd4bf;
+  --text: #f0f0f8;
+  --muted: #6b6b82;
+  --muted2: #9090aa;
+  --radius: 14px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ─── HERO ─── */
+.hero {
+  background: linear-gradient(135deg, #0a0a0f 0%, #12121e 50%, #0d1a14 100%);
+  padding: 48px 28px 40px;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(34,211,160,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--green-dim);
+  border: 1px solid var(--green-border);
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 100px;
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(52px, 10vw, 88px);
+  line-height: 0.92;
+  letter-spacing: 0.01em;
+  margin-bottom: 16px;
+}
+
+.hero h1 .line2 { color: var(--green); }
+
+.hero-sub {
+  color: var(--muted2);
+  font-size: 15px;
+  font-weight: 400;
+  max-width: 520px;
+  line-height: 1.65;
+  margin-bottom: 8px;
+}
+
+.dad-joke-hero {
+  font-size: 12px;
+  color: var(--muted);
+  font-style: italic;
+  margin-bottom: 28px;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.hero-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.hero-stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  color: var(--green);
+  line-height: 1;
+}
+
+.hero-stat-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+/* ─── NAV ─── */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10,10,15,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 20px;
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.nav::-webkit-scrollbar { display: none; }
+
+.nav-btn {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.nav-btn:hover { color: var(--text); }
+.nav-btn.active { color: var(--green); border-bottom-color: var(--green); }
+
+/* ─── LAYOUT ─── */
+.content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 20px 80px;
+}
+
+.panel { display: none; }
+.panel.active { display: block; }
+
+.section-header { margin-bottom: 24px; }
+
+.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px;
+  letter-spacing: 0.03em;
+  margin-bottom: 6px;
+}
+
+.section-sub {
+  font-size: 14px;
+  color: var(--muted2);
+  line-height: 1.6;
+}
+
+/* ─── DAD JOKE CALLOUT ─── */
+.dad-joke {
+  background: var(--yellow-dim);
+  border: 1px solid var(--yellow-border);
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 13px;
+  color: #fde68a;
+  margin-bottom: 14px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.dad-joke-icon { font-size: 18px; flex-shrink: 0; }
+.dad-joke-text { line-height: 1.6; }
+.dad-joke-text em { font-style: italic; color: var(--yellow); }
+
+/* ─── INFO BOX ─── */
+.info-box {
+  background: var(--green-dim);
+  border: 1px solid var(--green-border);
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-size: 13px;
+  color: #a0ead4;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+.info-box strong { color: var(--green); }
+
+/* ─── DAY CARDS ─── */
+.day-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.day-card:hover { border-color: var(--border2); }
+
+.day-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.day-dot {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.day-meta { flex: 1; min-width: 0; }
+.day-tag { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; margin-bottom: 3px; }
+.day-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 0.02em; line-height: 1; }
+
+.day-pills { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
+.pill { font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 10px; border-radius: 100px; white-space: nowrap; }
+
+.chevron { font-size: 12px; color: var(--muted); transition: transform 0.25s; margin-left: 8px; flex-shrink: 0; }
+.day-card.open .chevron { transform: rotate(180deg); }
+
+.day-body { display: none; border-top: 1px solid var(--border); padding: 24px; }
+.day-card.open .day-body { display: block; }
+
+.activity {
+  background: var(--card2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 20px;
+  margin-bottom: 14px;
+}
+.activity:last-child { margin-bottom: 0; }
+
+.activity-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.activity-icon { font-size: 18px; }
+.activity-title { font-size: 14px; font-weight: 700; flex: 1; }
+.activity-time { font-size: 11px; color: var(--muted); font-weight: 500; white-space: nowrap; }
+
+.activity-desc { font-size: 13.5px; color: var(--muted2); line-height: 1.7; margin-bottom: 12px; }
+
+.activity-steps { display: flex; flex-direction: column; gap: 6px; }
+.activity-step { display: flex; gap: 10px; font-size: 13px; line-height: 1.5; color: var(--text); }
+.step-num { width: 20px; height: 20px; border-radius: 50%; background: var(--border); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+.output-row { display: flex; align-items: center; gap: 8px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); font-size: 12.5px; color: var(--muted2); }
+.output-badge { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green); background: var(--green-dim); border: 1px solid var(--green-border); padding: 3px 10px; border-radius: 100px; flex-shrink: 0; }
+
+/* day color themes */
+.theme-green .day-dot { background: var(--green-dim); color: var(--green); border: 1px solid var(--green-border); }
+.theme-green .day-tag { color: var(--green); }
+.theme-blue .day-dot { background: var(--blue-dim); color: var(--blue); border: 1px solid var(--blue-border); }
+.theme-blue .day-tag { color: var(--blue); }
+.theme-yellow .day-dot { background: var(--yellow-dim); color: var(--yellow); border: 1px solid var(--yellow-border); }
+.theme-yellow .day-tag { color: var(--yellow); }
+.theme-orange .day-dot { background: var(--orange-dim); color: var(--orange); border: 1px solid var(--orange-border); }
+.theme-orange .day-tag { color: var(--orange); }
+.theme-pink .day-dot { background: var(--pink-dim); color: var(--pink); border: 1px solid var(--pink-border); }
+.theme-pink .day-tag { color: var(--pink); }
+.theme-teal .day-dot { background: rgba(45,212,191,0.1); color: var(--teal); border: 1px solid rgba(45,212,191,0.25); }
+.theme-teal .day-tag { color: var(--teal); }
+.theme-red .day-dot { background: var(--red-dim); color: var(--red); border: 1px solid var(--red-border); }
+.theme-red .day-tag { color: var(--red); }
+
+/* ─── PROMPTS ─── */
+.prompt-group { margin-bottom: 32px; }
+.prompt-group-title { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.04em; margin-bottom: 14px; }
+
+.prompt-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  position: relative;
+}
+.prompt-card:hover { border-color: var(--blue-border); }
+.prompt-card.copied { border-color: var(--green); }
+
+.prompt-card-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+.prompt-card-text { font-size: 13.5px; line-height: 1.75; color: #c8c8e0; }
+.prompt-card-text em { color: var(--yellow); font-style: normal; font-weight: 600; }
+
+.copy-tag { position: absolute; top: 12px; right: 14px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); opacity: 0; transition: opacity 0.2s; }
+.prompt-card:hover .copy-tag { opacity: 1; }
+
+/* ─── SKILLS ─── */
+.skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-bottom: 32px; }
+
+.skill-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 22px; transition: all 0.2s; }
+.skill-card:hover { border-color: var(--border2); transform: translateY(-2px); }
+
+.skill-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+.skill-emoji { font-size: 26px; }
+.skill-level { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 9px; border-radius: 100px; }
+.level-beginner { background: var(--green-dim); color: var(--green); border: 1px solid var(--green-border); }
+.level-core { background: var(--blue-dim); color: var(--blue); border: 1px solid var(--blue-border); }
+.level-advanced { background: var(--yellow-dim); color: var(--yellow); border: 1px solid var(--yellow-border); }
+
+.skill-name { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.03em; margin-bottom: 6px; }
+.skill-desc { font-size: 13px; color: var(--muted2); line-height: 1.6; }
+.skill-used { margin-top: 12px; font-size: 11px; color: var(--muted); }
+.skill-used span { display: inline-block; background: var(--border); border-radius: 4px; padding: 2px 7px; margin: 2px 3px 2px 0; font-size: 10px; }
+
+/* ─── BUDGET ─── */
+.budget-wrapper { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; margin-bottom: 20px; }
+
+.budget-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; gap: 16px; flex-wrap: wrap; }
+.budget-heading { font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 0.03em; margin-bottom: 4px; }
+.budget-sub { font-size: 13px; color: var(--muted2); }
+
+.budget-total-display { text-align: right; }
+.budget-remaining-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 2px; }
+.budget-remaining-num { font-family: 'Bebas Neue', sans-serif; font-size: 36px; color: var(--green); line-height: 1; }
+
+.budget-bar-wrap { background: var(--border); border-radius: 100px; height: 8px; margin-bottom: 8px; overflow: hidden; }
+.budget-bar-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, var(--green), var(--teal)); transition: width 0.4s ease, background 0.4s ease; }
+
+.budget-meta { font-size: 12px; color: var(--muted); margin-bottom: 20px; display: flex; justify-content: space-between; }
+
+.budget-items { display: flex; flex-direction: column; gap: 10px; }
+
+.budget-row { display: flex; align-items: center; gap: 10px; }
+.budget-row input[type="text"], .budget-row input[type="number"] {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+  color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px;
+  padding: 8px 12px; transition: border-color 0.2s; outline: none;
+}
+.budget-row input[type="text"] { flex: 1; }
+.budget-row input[type="number"] { width: 96px; }
+.budget-row input:focus { border-color: var(--green); }
+.budget-row input::placeholder { color: var(--muted); }
+
+.budget-del { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 16px; padding: 4px; transition: color 0.2s; }
+.budget-del:hover { color: var(--red); }
+
+.budget-actions { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+
+.btn { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; font-weight: 600; padding: 9px 18px; border-radius: 8px; border: none; cursor: pointer; transition: all 0.2s; }
+.btn-green { background: var(--green); color: #0a0a0f; }
+.btn-green:hover { background: #1fbf8e; }
+.btn-outline { background: transparent; border: 1px solid var(--border); color: var(--muted2); }
+.btn-outline:hover { border-color: var(--border2); color: var(--text); }
+
+.budget-tips { background: rgba(34,211,160,0.05); border: 1px solid var(--green-border); border-radius: 10px; padding: 16px 18px; font-size: 13px; color: #a0ead4; line-height: 1.7; margin-top: 20px; }
+.budget-tips strong { color: var(--green); }
+
+.budget-breakdown { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border); }
+.breakdown-title { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 12px; font-weight: 600; }
+.breakdown-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.breakdown-box { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px; text-align: center; }
+.breakdown-num { font-family: 'Bebas Neue', sans-serif; font-size: 22px; margin-bottom: 2px; }
+.breakdown-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+
+/* ─── CHECKLIST ─── */
+.checklist-group { margin-bottom: 28px; }
+.checklist-group-title { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.04em; margin-bottom: 14px; color: var(--muted2); }
+
+.check-item { display: flex; gap: 12px; padding: 13px 16px; border-radius: 10px; cursor: pointer; transition: background 0.15s; user-select: none; }
+.check-item:hover { background: var(--card); }
+
+.chkbox { width: 22px; height: 22px; border-radius: 6px; border: 2px solid var(--border2); flex-shrink: 0; margin-top: 1px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-size: 12px; color: #0a0a0f; font-weight: 800; }
+.check-item.done .chkbox { background: var(--green); border-color: var(--green); }
+.check-label { font-size: 14px; line-height: 1.5; transition: color 0.2s; }
+.check-item.done .check-label { color: var(--muted); text-decoration: line-through; }
+.check-note { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+/* ─── AI TOOL PICKER ─── */
+.tool-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.tool-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px;
+  position: relative;
+}
+
+.tool-claude { border: 2px solid var(--orange-border); }
+.tool-copilot { border-color: var(--blue-border); }
+.tool-chatgpt { border-color: var(--green-border); }
+.tool-gemini { border-color: var(--pink-border); }
+
+.tool-badge {
+  position: absolute;
+  top: 14px; right: 14px;
+  background: var(--orange-dim);
+  color: var(--orange);
+  border: 1px solid var(--orange-border);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 100px;
+}
+
+.tool-emoji { font-size: 30px; margin-bottom: 10px; }
+.tool-name { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 0.03em; margin-bottom: 4px; }
+.tool-maker { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; }
+.tool-desc { font-size: 13px; color: var(--muted2); line-height: 1.7; margin-bottom: 14px; }
+.tool-best-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+.tool-best-item { font-size: 13px; color: var(--green); padding: 2px 0; }
+.tool-footer {
+  margin-top: 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 12px;
+  color: var(--muted2);
+  line-height: 1.6;
+}
+.tool-footer strong { color: var(--text); }
+.tool-link { font-weight: 600; text-decoration: none; }
+.tool-link:hover { text-decoration: underline; }
+.tool-link-orange { color: var(--orange); }
+.tool-link-blue { color: var(--blue); }
+.tool-link-green { color: var(--green); }
+.tool-link-pink { color: var(--pink); }
+
+/* Comparison table */
+.compare-wrap {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px;
+  margin-bottom: 20px;
+}
+.compare-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: 0.03em;
+  margin-bottom: 16px;
+}
+.compare-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.compare-table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 360px; }
+.compare-th-feature { text-align: left; padding: 8px 10px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; color: var(--muted); border-bottom: 1px solid var(--border2); }
+.compare-th { text-align: center; padding: 8px 8px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; border-bottom: 1px solid var(--border2); }
+.compare-row { border-bottom: 1px solid var(--border); }
+.compare-td-feature { padding: 9px 10px; color: var(--muted2); font-size: 12.5px; }
+.compare-td { text-align: center; padding: 9px 8px; font-size: 12px; }
+.compare-dim { color: var(--muted); }
+
+/* Dad rec */
+.dad-rec-box {
+  background: var(--yellow-dim);
+  border: 1px solid var(--yellow-border);
+  border-radius: 14px;
+  padding: 22px;
+}
+.dad-rec-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  letter-spacing: 0.03em;
+  margin-bottom: 12px;
+  color: var(--yellow);
+}
+.dad-rec-body { font-size: 13.5px; color: #fde68a; line-height: 1.8; }
+.dad-rec-body strong { color: var(--yellow); }
+.dad-rec-footnote { color: var(--muted2); font-size: 12px; font-style: italic; }
+
+/* Life skills grid in skills panel */
+.life-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 10px;
+}
+.life-card {
+  background: var(--card2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.life-card span { display: block; color: var(--muted2); font-size: 12px; margin-top: 2px; }
+
+/* Mobile overrides for tool panel */
+@media (max-width: 600px) {
+  .tool-grid { grid-template-columns: 1fr; gap: 12px; }
+  .tool-card { padding: 18px 16px; }
+  .tool-badge { font-size: 9px; padding: 2px 8px; top: 12px; right: 12px; }
+  .tool-name { font-size: 20px; }
+  .compare-wrap { padding: 16px 14px; }
+  .compare-title { font-size: 18px; }
+  .compare-td-feature { font-size: 11.5px; padding: 8px 8px; }
+  .compare-td { font-size: 11px; padding: 8px 6px; }
+  .compare-th { font-size: 10px; padding: 8px 6px; }
+  .dad-rec-box { padding: 16px 14px; }
+  .dad-rec-title { font-size: 17px; }
+  .dad-rec-body { font-size: 13px; }
+  .life-grid { grid-template-columns: 1fr 1fr; }
+  .life-card { font-size: 12.5px; padding: 12px; }
+}
+@media (max-width: 600px) {
+
+  /* Hero */
+  .hero { padding: 28px 18px 28px; }
+  .hero h1 { font-size: 52px; line-height: 0.88; margin-bottom: 14px; }
+  .hero-sub { font-size: 14px; margin-bottom: 6px; }
+  .dad-joke-hero { font-size: 11px; margin-bottom: 20px; }
+  .hero-stats { gap: 18px; }
+  .hero-stat-num { font-size: 24px; }
+  .hero-stat-label { font-size: 10px; }
+
+  /* Nav — larger tap targets, emoji only on very small screens */
+  .nav { padding: 0 8px; }
+  .nav-btn { font-size: 11px; padding: 12px 10px; letter-spacing: 0; }
+
+  /* Content */
+  .content { padding: 20px 14px 80px; }
+  .section-title { font-size: 26px; }
+  .section-sub { font-size: 13px; }
+
+  /* Dad jokes */
+  .dad-joke { padding: 12px 14px; font-size: 12.5px; gap: 8px; }
+  .dad-joke-icon { font-size: 16px; }
+
+  /* Day cards */
+  .day-header { padding: 16px 14px; gap: 10px; }
+  .day-dot { width: 32px; height: 32px; font-size: 14px; }
+  .day-tag { font-size: 9px; }
+  .day-title { font-size: 18px; }
+  .day-pills { display: none; }
+  .chevron { margin-left: 4px; }
+  .day-body { padding: 16px 14px; }
+
+  /* Activities */
+  .activity { padding: 14px 14px; }
+  .activity-header { gap: 8px; flex-wrap: wrap; }
+  .activity-title { font-size: 13.5px; min-width: 0; }
+  .activity-time { font-size: 10px; }
+  .activity-desc { font-size: 13px; }
+  .activity-step { font-size: 12.5px; gap: 8px; }
+  .step-num { width: 18px; height: 18px; font-size: 9px; flex-shrink: 0; }
+  .output-row { flex-wrap: wrap; font-size: 12px; }
+
+  /* Prompts */
+  .prompt-card { padding: 14px 14px 14px 14px; }
+  .prompt-card-text { font-size: 13px; line-height: 1.7; }
+  /* Always show copy hint on mobile (no hover) */
+  .copy-tag { opacity: 0.6; font-size: 9px; }
+
+  /* Skills */
+  .skills-grid { grid-template-columns: 1fr; gap: 10px; }
+  .skill-card { padding: 16px; }
+
+  /* Budget */
+  .budget-wrapper { padding: 18px 14px; }
+  .budget-top { flex-direction: column; gap: 10px; }
+  .budget-total-display { text-align: left; }
+  .budget-remaining-num { font-size: 32px; }
+  .budget-row { gap: 8px; }
+  .budget-row input[type="text"] { font-size: 13px; padding: 9px 10px; min-width: 0; }
+  .budget-row input[type="number"] { width: 72px; font-size: 13px; padding: 9px 8px; }
+  .budget-del { font-size: 18px; padding: 6px; min-width: 32px; }
+  .btn { font-size: 13px; padding: 10px 14px; }
+  .budget-actions { gap: 8px; }
+  .breakdown-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .breakdown-num { font-size: 18px; }
+  .breakdown-label { font-size: 9px; }
+
+  /* Checklist */
+  .check-item { padding: 12px 10px; gap: 10px; }
+  .chkbox { width: 24px; height: 24px; flex-shrink: 0; }
+  .check-label { font-size: 13.5px; }
+  .check-note { font-size: 11.5px; }
+  .checklist-group-title { font-size: 18px; }
+}
+
+/* Very small phones */
+@media (max-width: 380px) {
+  .hero h1 { font-size: 44px; }
+  .nav-btn { font-size: 10px; padding: 12px 8px; }
+  .breakdown-grid { grid-template-columns: 1fr 1fr; }
+  .breakdown-box:last-child { grid-column: span 2; }
+}
+
+/* Touch devices — always-visible copy hint, min tap targets */
+@media (hover: none) {
+  .copy-tag { opacity: 0.55; }
+  .prompt-card { padding-bottom: 36px; }
+  .copy-tag { bottom: 12px; top: auto; }
+  .check-item { min-height: 52px; }
+  .nav-btn { min-height: 44px; }
+  .btn { min-height: 44px; }
+  .budget-del { min-width: 36px; min-height: 36px; font-size: 20px; }
+  .day-header { min-height: 60px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">🛏 Summer AI Project · Age 15</div>
+  <h1>BRYCE'S<br><span class="line2">ROOM PROJECT</span></h1>
+  <p class="hero-sub">A real project at your own pace. Design your bedroom, build a budget, shop smart, learn AI, and pitch it to your parents — all on $350. No pressure. (Okay, some pressure.)</p>
+  <p class="dad-joke-hero">⚠️ Dad joke warning: this guide contains humor that is scientifically proven to cause eye-rolling.</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="hero-stat-num">7</div><div class="hero-stat-label">Days</div></div>
+    <div class="hero-stat"><div class="hero-stat-num">15+</div><div class="hero-stat-label">Activities</div></div>
+    <div class="hero-stat"><div class="hero-stat-num">$350</div><div class="hero-stat-label">Budget</div></div>
+    <div class="hero-stat"><div class="hero-stat-num">1</div><div class="hero-stat-label">Epic Pitch</div></div>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="nav">
+  <button class="nav-btn active" onclick="switchPanel('days', this)">📅 The Week</button>
+  <button class="nav-btn" onclick="switchPanel('aitool', this)">🤖 Pick Your AI</button>
+  <button class="nav-btn" onclick="switchPanel('prompts', this)">💬 Prompts</button>
+  <button class="nav-btn" onclick="switchPanel('skills', this)">⚡ AI Skills</button>
+  <button class="nav-btn" onclick="switchPanel('budget', this)">💰 Budget Tracker</button>
+  <button class="nav-btn" onclick="switchPanel('checklist', this)">✅ Checklist</button>
+</div>
+<div id="syncStatus" style="background:var(--surface);border-bottom:1px solid var(--border);padding:5px 20px;text-align:right;min-height:26px;"></div>
+
+<div class="content">
+
+<!-- ═══ THE WEEK ═══ -->
+<div id="panel-days" class="panel active">
+  <div class="section-header">
+    <div class="section-title">THE WEEK AT A GLANCE</div>
+    <div class="section-sub">Click any day to expand. Each session is 45–75 min. You can do these whenever — just try to finish by the end of the week so your pitch is fresh.</div>
+  </div>
+
+  <div class="dad-joke" style="margin-bottom:20px;">
+    <div class="dad-joke-icon">👨</div>
+    <div class="dad-joke-text">Why did the teenager redesign his bedroom? Because he wanted to take his style to the <em>next level</em>. (His room was on the second floor. Get it? ...You'll get it when you're older.)</div>
+  </div>
+
+  <!-- DAY 1 -->
+  <div class="day-card theme-green" id="day1">
+    <div class="day-header" onclick="toggleDay('day1')">
+      <div class="day-dot">1</div>
+      <div class="day-meta">
+        <div class="day-tag">Day 1</div>
+        <div class="day-title">Mission Briefing & Room Recon</div>
+      </div>
+      <div class="day-pills">
+        <div class="pill" style="background:var(--green-dim);color:var(--green);border:1px solid var(--green-border)">~60 min</div>
+        <div class="pill" style="background:var(--border);color:var(--muted2)">Setup</div>
+      </div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="day-body">
+
+      <div class="dad-joke">
+        <div class="dad-joke-icon">📐</div>
+        <div class="dad-joke-text">Before you ask AI to help you redesign anything, you need actual measurements. You can't just tell it your room is "pretty big." That's not a unit of measurement, Bryce. That's a vibe.</div>
+      </div>
+
+      <div class="activity">
+        <div class="activity-header">
+          <div class="activity-icon">📐</div>
+          <div class="activity-title">Measure & Map Your Room</div>
+          <div class="activity-time">20 min</div>
+        </div>
+        <div class="activity-desc">Grab a tape measure and document your room like a pro. This is the real-world data that makes everything else possible — AI can't help you if it doesn't know what it's working with.</div>
+        <div class="activity-steps">
+          <div class="activity-step"><div class="step-num">1</div>Measure length, width, and ceiling height in feet and inches</div>
+          <div class="activity-step"><div class="step-num">2</div>Sketch a rough floor plan — mark every door, window, and outlet</div>
+          <div class="activity-step"><div class="step-num">3</div>Photograph each wall and every piece of furniture</div>
+          <div class="activity-step"><div class="step-num">4</div>List everything currently in the room with rough dimensions</div>
+        </div>
+        <div class="output-row"><div class="output-badge">Output</div> Room data sheet + photo log</div>
+      </div>
+
+      <div class="activity">
+        <div class="activity-header">
+          <div class="activity-icon">🤖</div>
+          <div class="activity-title">First AI Session: Write Your Design Brief</div>
+          <div class="activity-time">25 min</div>
+        </div>
+        <div class="activity-desc">This is your first real AI conversation. Before you start, check the <strong>Pick Your AI</strong> tab with your dad and decide which tool you're using — they all work with the same prompts. Your goal here: give the AI enough context that it could describe your room to a stranger. Use the Session 1 starter prompt in the Prompts tab — fill in every blank. The more you give, the more you get back.</div>
+        <div class="activity-steps">
+          <div class="activity-step"><div class="step-num">1</div>Open your AI tool of choice and start a new conversation</div>
+          <div class="activity-step"><div class="step-num">2</div>Use the "Design Brief Kickoff" prompt — fill in your real measurements, budget ($350), and vibe</div>
+          <div class="activity-step"><div class="step-num">3</div>Ask your AI to write the brief as a formatted one-page document you can save</div>
+          <div class="activity-step"><div class="step-num">4</div>Copy it into a Google Doc — you'll reference this all week</div>
+        </div>
+        <div class="output-row"><div class="output-badge">Output</div> Your official Design Brief</div>
+      </div>
+
+      <div class="activity">
+        <div class="activity-header">
+          <div class="activity-icon">🧪</div>
+          <div class="activity-title">Fun Experiment: The Bad Prompt Test</div>
+          <div class="activity-time">15 min</div>
+        </div>
+        <div class="activity-desc">This might be the most important 15 minutes of the whole week. You're going to deliberately give your AI a terrible prompt, then compare it to a good one. The difference will actually surprise you — and it works the same way in every AI tool.</div>
+        <div class="activity-steps">
+          <div class="activity-step"><div class="step-num">1</div>Type exactly this: <strong>"redesign my room"</strong> — screenshot the response</div>
+          <div class="activity-step"><div class="step-num">2</div>Now paste your full design brief and ask the same question</div>
+          <div class="activity-step"><div class="step-num">3</div>Write down 3 specific differences between the two answers</div>
+        </div>
+        <div class="output-row"><div class="output-badge">Lesson</div> Garbage in = garbage out. This applies to AI, school essays, and life.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- DAY 2 -->
+  <div class="day-card theme-blue" id="day2">
+    <div class="day-header" onclick="toggleDay('day2')">
+      <div class="day-dot">2</div>
+      <div class="day-meta">
+        <div class="day-tag">Day 2</div>
+        <div class="day-title">Layout Design & The Push-Back Game</div>
+      </div>
+      <div class="day-pills">
+        <div class="pill" style="background:var(--blue-dim);color:var(--blue);border:1px solid var(--blue-border)">~75 min</div>
+        <div class="pill" style="background:var(--border);color:var(--muted2)">Design</div>
+      </div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="day-body">
+
+      <div class="dad-joke">
+        <div class="dad-joke-icon">👨</div>
+        <div class="dad-joke-text">Today you're going to argue with an AI. Good news: it won't get offended. It won't tell you you're wrong. It won't bring it up at dinner later. It's basically the perfect conversation partner — unlike <em>some</em> people's dads.</div>
+      </div>
+
+      <div class="activity">
+        <div class="activity-header">
+          <div class="activity-icon">🗺️</div>
+          <div class="activity-title">Generate 3 Totally Different Layouts</div>
+          <div class="activity-time">30 min</div>
+        </div>
+        <div class="activity-desc">Ask your AI for three layouts that are genuinely different — not just the same room with the bed on a slightly different wall. Force it to think creatively. Then pick the least obvious one to explore further.</div>
+        <div class="activity-steps">
+          <div class="activity-step"><div class="step-num">1</div>Use the "Generate 3 Layouts" prompt from the Prompts tab</div>
+          <div class="activity-step"><div class="step-num">2</div>For each layout, ask: "What are the 2 best things and the 1 worst thing about this?"</div>
+          <div class="activity-step"><div class="step-num">3</div>Pick your favorite and write down exactly what you'd change about it</div>
+        </div>
+        <div class="output-row"><div class="output-badge">Output</div> 1 chosen layout concept</div>
+      </div>
+
+      <div class="activity">
+        <div class="activity-header">
+          <div class="activity-icon">🔁</div>
+          <div class="activity-title">The Push-Back Game</div>
+          <div class="activity-time">20 min</div>
+        </div>
+        <div class="activity-desc">Great AI users don't just accept the first answer — they push back, redirect, and keep going until they get what they actually want. Practice this now. Be specific about what you don't like and why.</div>
+        <div class="activity-steps">
+          <div class="activity-step"><div class="step-num">1</div>Find at least 2 things in your chosen layout you'd change</div>
+          <div class="activity-step"><div class="step-num">2</div>Tell your AI specifically why — not "I don't like it" but "I don't like this because..."</div>
+          <div class="activity-step"><div class="step-num">3</div>Keep iterating until the layout actually feels like yours, not AI's generic idea of a room</div>
+        </div>
+        <div class="output-row"><div class="output-badge">Lesson</div> You're the designer. AI is just your very fast assistant.</div>
+      </div>
+
+      <div class="activity">
+        <div class="activity-header">
+          <div class="activity-icon">🖼️</div>
+          <div class="activity-title">Bonus: Mock It Up in a Room Planner</div>
+          <div class="activity-time">25 min</div>
+        </div>
+        <div class="activity-desc">Make your layout real by building it in a free online room planner. Ask your AI to translate its description into step-by-step placement instructions you can follow in the tool.</div>
+        <div class="activity-steps">
+          <div class="activity-step"><div class="step-num">1</div>Go to roomstyler.com or planner5d.com (both free, no download)</div>
+          <div class="activity-step"><div class="step-num">2</div>Ask your AI: "Give me step-by-step instructions for placing my furniture in a room planner, starting with room dimensions"</div>
+          <div class="activity-step"><div class="step-num">3</div>Screenshot the finished layout — you'll use this in your pitch</div>
+        </div>
+        <div class="output-row"><div class="output-badge">Output</div> Room layout screenshot for the pitch</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- DAY 3 -->
+  <div class="day-card theme-yellow" id="day3">
+    <div class="day-header" onclick="toggleDay('day3')">
+      <div class="day-dot">3</div>
+      <div class="day-meta">
+        <div class="day-tag">Day 3</div>
+        <div class="day-title">Budget 101 & Real Money Skills</div>
+      </div>
+      <div class="day-pills">
+        <div class="pill" style="background:var(--yellow-dim);color:var(--yellow);border:1px solid var(--yellow-border)">~70 min</div>
+        <div class="pill" style="background:var(--border);color:var(--muted2)">Money Skills</div>
+      </div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="day-body">
+
+      <div class="dad-joke">
+        <div class="dad-joke-icon">💸</div>
+        <div class="dad-joke-text">You have $350. That sounds like a lot until you look at furniture prices. Why did the teenager go broke buying a desk? Because he didn't have a <em>plan</em> — unlike his very wise, very handsome father who set a budget. (You're welcome.)</div>
+      </div>
+
+      <div class="activity">
+        <div class="activity-header">
+          <div class="activity-icon">🧠</div>
+          <div class="activity-title">Learn How Budgets Actually Work</div>
+          <div class="activity-time">20 min</div>
+        </div>
+        <div class="activity-desc">Before you spend a single imaginary dollar, ask your AI to teach you budgeting basics. This is a real skill that most adults wish someone had taught them at 15.</div>
+        <div class="activity-steps">
+          <div class="activity-step"><div class="step-num">1</div>Use the "Budget Basics" prompt from the Prompts tab</div>
+          <div class="activity-step"><div class="step-num">2</div>Ask your AI: "What's the most common money mistake 15-year-olds make when they get their first real budget?"</div>
+          <div class="activity-step"><div class="step-num">3</div>Set up your $350 budget in the Budget Tracker tab — and add a 10% contingency line ($35) immediately</div>
+        </div>
+        <div class="output-row"><div class="output-badge">Lesson</div> $350 budget means $315 to spend. Always keep a buffer.</div>
+      </div>
+
+      <div class="activity">
+        <div class="activity-header">
+          <div class="activity-icon">🛒</div>
+          <div class="activity-title">AI-Assisted Shopping Research</div>
+          <div class="activity-time">30 min</div>
+        </div>
+        <div class="activity-desc">Use your AI to generate options for each item you need — but here's the catch: you must verify every single price yourself. AI prices can be outdated or just plain wrong. Don't trust it blindly.</div>
+        <div class="activity-steps">
+          <div class="activity-step"><div class="step-num">1</div>For each major item, ask your AI for 3 options at different price points: budget, mid-range, premium</div>
+          <div class="activity-step"><div class="step-num">2</div>Look up every suggestion on Amazon, IKEA, Target, or Wayfair to get the real price</div>
+          <div class="activity-step"><div class="step-num">3</div>Only add verified prices to your Budget Tracker</div>
+        </div>
+        <div class="output-row"><div class="output-badge">Output</div> Verified shopping list with real prices</div>
+      </div>
+
+      <div class="activity">
+        <div class="activity-header">
+          <div class="activity-icon">⚖️</div>
+          <div class="activity-title">The Needs vs. Wants Showdown</div>
+          <div class="activity-time">20 min</div>
+        </div>
+        <div class="activity-desc">This is where $350 gets real. Every item on your list has to earn its spot. Separate what you actually need from what you just want — and cut or downgrade until you're under budget.</div>
+        <div class="activity-steps">
+          <div class="activity-step"><div class="step-num">1</div>Label every item: Need, Want, or Nice-to-Have</div>
+          <div class="activity-step"><div class="step-num">2</div>Use the "Worth It? Test" prompt to ask your AI for cheaper alternatives to your wants</div>
+          <div class="activity-step"><div class="step-num">3</div>Cut or swap anything that pushes you over $315 (remember that buffer!)</div>
+        </div>
+        <div class="output-row"><div class="output-badge">Lesson</div> Needs get funded first. Wants get funded if anything's left.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- DAY 4 -->
+  <div class="day-card theme-orange" id="day4">
+    <div class="day-header" onclick="toggleDay('day4')">
+      <div class="day-dot">4</div>
+      <div class="day-meta">
+        <div class="day-tag">Day 4</div>
+        <div class="day-title">Style Lab & Vibe Check</div>
+      </div>
+      <div class="day-pills">
+        <div class="pill" style="background:var(--orange-dim);color:var(--orange);border:1px solid var(--orange-border)">~60 min</div>
+        <div class="pill" style="background:var(--border);color:var(--muted2)">Creative</div>
+      </div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="day-body">
+
+      <div class="dad-joke">
+        <div class="dad-joke-icon">🎨</div>
+        <div class="dad-joke-text">Today is about figuring out your style. And no, "I don't know, just make it look cool" is not a design brief — that's a cry for help. Even your dad has a style. (It's called "whatever was on sale in 2009," but still. It's a style.)</div>
+      </div>
+
+      <div class="activity">
+        <div class="activity-header">
+          <div class="activity-icon">🎨</div>
+          <div class="activity-title">Discover Your Design Style</div>
+          <div class="activity-time">20 min</div>
+        </div>
+        <div class="activity-desc">Most people don't know what design style they actually like until they see it. Use AI to walk you through options, then pick what actually sounds like you — not what you think sounds cool.</div>
+        <div class="activity-steps">
+          <div class="activity-step"><div class="step-num">1</div>Use the "Find Your Style" prompt — ask your AI to describe 5 teenage bedroom styles with real detail</div>
+          <div class="activity-step"><div class="step-num">2</div>Pick the 1-2 that sound most like you, then ask your AI to blend them into one</div>
+          <div class="activity-step"><div class="step-num">3</div>Ask your AI to suggest a 3-color palette for your room and explain why each color works</div>
+        </div>
+        <div class="output-row"><div class="output-badge">Output</div> Style name + 3-color palette</div>
+      </div>
+
+      <div class="activity">
+        <div class="activity-header">
+          <div class="activity-icon">🌟</div>
+          <div class="activity-title">The Pinterest + AI Combo</div>
+          <div class="activity-time">25 min</div>
+        </div>
+        <div class="activity-desc">Find real visual inspiration, then use your AI to decode what makes it work and how to get a similar look on a $350 budget. This is how designers actually work.</div>
+        <div class="activity-steps">
+          <div class="activity-step"><div class="step-num">1</div>Browse Pinterest or Google Images for "bedroom inspo" — save 3 images you genuinely like (not what you think you should like)</div>
+          <div class="activity-step"><div class="step-num">2</div>Describe each image to your AI: "Here's what I see — [describe it]. What design principles make this work?"</div>
+          <div class="activity-step"><div class="step-num">3</div>Ask: "How do I get this same feeling in my room for under $350 total?"</div>
+        </div>
+        <div class="output-row"><div class="output-badge">Output</div> Inspiration reference + budget translation</div>
+      </div>
+
+      <div class="activity">
+        <div class="activity-header">
+          <div class="activity-icon">💡</div>
+          <div class="activity-title">Lighting 101 — The Underrated Move</div>
+          <div class="activity-time">15 min</div>
+        </div>
+        <div class="activity-desc">Here's a secret: lighting is the most impactful thing you can change in a room for the least money. Most people blow their whole budget on furniture and forget that a $25 lamp can completely transform a space.</div>
+        <div class="activity-steps">
+          <div class="activity-step"><div class="step-num">1</div>Use the "Lighting Breakdown" prompt — learn ambient, task, and accent lighting</div>
+          <div class="activity-step"><div class="step-num">2</div>Ask your AI for 3 lighting ideas under $40 each that match your style</div>
+          <div class="activity-step"><div class="step-num">3</div>Verify prices and add your favorites to the Budget Tracker</div>
+        </div>
+        <div class="output-row"><div class="output-badge">Lesson</div> Great lighting > expensive furniture. Every time.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- DAY 5 -->
+  <div class="day-card theme-pink" id="day5">
+    <div class="day-header" onclick="toggleDay('day5')">
+      <div class="day-dot">5</div>
+      <div class="day-meta">
+        <div class="day-tag">Day 5</div>
+        <div class="day-title">Smart Shopping & Price Hunting</div>
+      </div>
+      <div class="day-pills">
+        <div class="pill" style="background:var(--pink-dim);color:var(--pink);border:1px solid var(--pink-border)">~60 min</div>
+        <div class="pill" style="background:var(--border);color:var(--muted2)">Real World</div>
+      </div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="day-body">
+
+      <div class="dad-joke">
+        <div class="dad-joke-icon">🛍️</div>
+        <div class="dad-joke-text">Today you learn the art of not paying full price. Why did the smart shopper bring a ladder to the store? To reach the <em>high savings</em>. Okay that one was bad. But the lesson is real — buying everything new at retail is the most expensive way to do this.</div>
+      </div>
+
+      <div class="activity">
+        <div class="activity-header">
+          <div class="activity-icon">🔎</div>
+          <div class="activity-title">New vs. Used vs. DIY: Know Your Options</div>
+          <div class="activity-time">25 min</div>
+        </div>
+        <div class="activity-desc">At $350, buying everything brand new is going to hurt. Learn the three strategies smart shoppers use — and which ones make the most sense for your list.</div>
+        <div class="activity-steps">
+          <div class="activity-step"><div class="step-num">1</div>Ask your AI: "What are the pros and cons of buying bedroom furniture new, secondhand (Facebook Marketplace, OfferUp), and DIY or upcycled? Give me real examples."</div>
+          <div class="activity-step"><div class="step-num">2</div>Pick 2 items from your list — search Facebook Marketplace for used versions near Atlanta</div>
+          <div class="activity-step"><div class="step-num">3</div>Calculate your savings vs. buying new — what else could you buy with that difference?</div>
+        </div>
+        <div class="output-row"><div class="output-badge">Lesson</div> Secondhand can cut costs 50–70%. That's real money.</div>
+      </div>
+
+      <div class="activity">
+        <div class="activity-header">
+          <div class="activity-icon">📊</div>
+          <div class="activity-title">Build a Real Comparison Table</div>
+          <div class="activity-time">25 min</div>
+        </div>
+        <div class="activity-desc">For your biggest planned purchase, build a proper comparison before deciding. This is exactly how adults (should) make buying decisions — but most don't bother. You will.</div>
+        <div class="activity-steps">
+          <div class="activity-step"><div class="step-num">1</div>Pick your most expensive item (probably a bed frame, desk, or shelf unit)</div>
+          <div class="activity-step"><div class="step-num">2</div>Ask your AI to create a comparison table: price, dimensions, where to buy, style, durability, value rating</div>
+          <div class="activity-step"><div class="step-num">3</div>Fill in real verified prices — then make your final decision and write down why</div>
+        </div>
+        <div class="output-row"><div class="output-badge">Output</div> Final purchase decision + documented reasoning</div>
+      </div>
+
+      <div class="activity">
+        <div class="activity-header">
+          <div class="activity-icon">📅</div>
+          <div class="activity-title">The "When to Buy" Hack</div>
+          <div class="activity-time">10 min</div>
+        </div>
+        <div class="activity-desc">Furniture goes on sale at predictable times every year. A little patience can save you $50–$100 — which on a $350 budget is a huge deal.</div>
+        <div class="activity-steps">
+          <div class="activity-step"><div class="step-num">1</div>Ask your AI: "What are the best times of year to buy furniture and home goods on sale?"</div>
+          <div class="activity-step"><div class="step-num">2</div>Note which upcoming sales events align with your timeline (Labor Day, Black Friday, etc.)</div>
+          <div class="activity-step"><div class="step-num">3</div>Decide which items to buy now vs. wait for a sale — and put it in your pitch</div>
+        </div>
+        <div class="output-row"><div class="output-badge">Lesson</div> Patience is a financial strategy. No, really.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- DAY 6 -->
+  <div class="day-card theme-teal" id="day6">
+    <div class="day-header" onclick="toggleDay('day6')">
+      <div class="day-dot">6</div>
+      <div class="day-meta">
+        <div class="day-tag">Day 6</div>
+        <div class="day-title">Build the Pitch Deck</div>
+      </div>
+      <div class="day-pills">
+        <div class="pill" style="background:rgba(45,212,191,0.1);color:var(--teal);border:1px solid rgba(45,212,191,0.25)">~75 min</div>
+        <div class="pill" style="background:var(--border);color:var(--muted2)">Presentation</div>
+      </div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="day-body">
+
+      <div class="dad-joke">
+        <div class="dad-joke-icon">🎤</div>
+        <div class="dad-joke-text">You've done all this work. Now you have to sell it. Why did the teenager ace his pitch? Because he <em>prepared</em>. And because his dad had a $350 budget he'd already committed to. The hard part was already done. (That's called setting yourself up for success. You're welcome, again.)</div>
+      </div>
+
+      <div class="activity">
+        <div class="activity-header">
+          <div class="activity-icon">📋</div>
+          <div class="activity-title">Know Your Objections in Advance</div>
+          <div class="activity-time">20 min</div>
+        </div>
+        <div class="activity-desc">A pitch isn't just a presentation — it's a negotiation. You need to know the tough questions before they're asked, and have real answers ready. Use AI to stress-test your own plan.</div>
+        <div class="activity-steps">
+          <div class="activity-step"><div class="step-num">1</div>Use the "Objection Prep" prompt — ask your AI for the top 5 questions a skeptical parent would ask about a $350 room redesign</div>
+          <div class="activity-step"><div class="step-num">2</div>Write a real, honest answer to each one — don't dodge the hard ones</div>
+          <div class="activity-step"><div class="step-num">3</div>Also prepare a "Phase 1" version of your plan in case the answer is "not all at once"</div>
+        </div>
+        <div class="output-row"><div class="output-badge">Lesson</div> If you can answer every objection before it's raised, you win the pitch.</div>
+      </div>
+
+      <div class="activity">
+        <div class="activity-header">
+          <div class="activity-icon">🎯</div>
+          <div class="activity-title">Build the 5-Slide Pitch</div>
+          <div class="activity-time">35 min</div>
+        </div>
+        <div class="activity-desc">Use your AI to help you write each slide — but don't let Claude write it for you word for word. Give Claude your ideas and let it help you say them more clearly. Your voice should still be in there.</div>
+        <div class="activity-steps">
+          <div class="activity-step"><div class="step-num">1</div><strong>Slide 1 — The Vision:</strong> What you want and why, in your own words</div>
+          <div class="activity-step"><div class="step-num">2</div><strong>Slide 2 — The Layout:</strong> Your design + room planner screenshot</div>
+          <div class="activity-step"><div class="step-num">3</div><strong>Slide 3 — The Shopping List:</strong> Every item, where to buy it, verified prices</div>
+          <div class="activity-step"><div class="step-num">4</div><strong>Slide 4 — The Budget:</strong> Full breakdown, $35 contingency included, total = $350</div>
+          <div class="activity-step"><div class="step-num">5</div><strong>Slide 5 — The Ask:</strong> Exactly what you need (money, help moving furniture, a trip to IKEA, etc.)</div>
+        </div>
+        <div class="output-row"><div class="output-badge">Output</div> Complete 5-slide pitch deck</div>
+      </div>
+
+      <div class="activity">
+        <div class="activity-header">
+          <div class="activity-icon">🤝</div>
+          <div class="activity-title">Practice Round: Claude as Skeptical Dad</div>
+          <div class="activity-time">20 min</div>
+        </div>
+        <div class="activity-desc">Run a full practice pitch before the real thing. Ask your AI to role-play as a skeptical parent — someone who loves you but is not just going to hand over money without being convinced.</div>
+        <div class="activity-steps">
+          <div class="activity-step"><div class="step-num">1</div>Use the "Practice Pitch" prompt — tell Claude to act like a skeptical but fair parent</div>
+          <div class="activity-step"><div class="step-num">2</div>Walk through each slide out loud, like you're really presenting</div>
+          <div class="activity-step"><div class="step-num">3</div>After each tough question, ask Claude: "Was my answer convincing? What could I say better?"</div>
+        </div>
+        <div class="output-row"><div class="output-badge">Lesson</div> Rehearsing once is worth more than preparing for an extra hour.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- DAY 7 -->
+  <div class="day-card theme-red" id="day7">
+    <div class="day-header" onclick="toggleDay('day7')">
+      <div class="day-dot">7</div>
+      <div class="day-meta">
+        <div class="day-tag">Day 7</div>
+        <div class="day-title">Pitch Day 🎯</div>
+      </div>
+      <div class="day-pills">
+        <div class="pill" style="background:var(--red-dim);color:var(--red);border:1px solid var(--red-border)">~45 min</div>
+        <div class="pill" style="background:var(--border);color:var(--muted2)">Final Boss</div>
+      </div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="day-body">
+
+      <div class="dad-joke">
+        <div class="dad-joke-icon">🏆</div>
+        <div class="dad-joke-text">This is it. Everything this week led to this moment. Why are we confident you'll do great? Because you've done the work, verified your prices, prepared for objections, and practiced. Also $350 was already the plan. So really you just have to not blow it. No pressure. (Some pressure. But you've got this.)</div>
+      </div>
+
+      <div class="activity">
+        <div class="activity-header">
+          <div class="activity-icon">☀️</div>
+          <div class="activity-title">Morning Prep</div>
+          <div class="activity-time">15 min</div>
+        </div>
+        <div class="activity-desc">One final check before you go live. Don't change anything big — just verify and get your head right.</div>
+        <div class="activity-steps">
+          <div class="activity-step"><div class="step-num">1</div>Re-read your pitch deck top to bottom</div>
+          <div class="activity-step"><div class="step-num">2</div>Confirm every price is verified and your total is at or under $350</div>
+          <div class="activity-step"><div class="step-num">3</div>Ask your AI one last thing: "What's the single most important point I should make in my pitch?"</div>
+        </div>
+      </div>
+
+      <div class="activity">
+        <div class="activity-header">
+          <div class="activity-icon">🎤</div>
+          <div class="activity-title">The Real Pitch</div>
+          <div class="activity-time">20 min</div>
+        </div>
+        <div class="activity-desc">Walk your parents through the deck. You've done the work — trust your prep. Be confident, be honest about tradeoffs, and be ready to negotiate if they push back on something specific.</div>
+        <div class="activity-steps">
+          <div class="activity-step"><div class="step-num">1</div>Present each slide — don't just read it, explain your thinking behind it</div>
+          <div class="activity-step"><div class="step-num">2</div>When they push back, use the objections you already prepared</div>
+          <div class="activity-step"><div class="step-num">3</div>If they say no to the full plan, offer your Phase 1 version — show you've thought about it</div>
+        </div>
+        <div class="output-row"><div class="output-badge">Goal</div> Get a "yes" — or at minimum a "let's talk more"</div>
+      </div>
+
+      <div class="activity">
+        <div class="activity-header">
+          <div class="activity-icon">💬</div>
+          <div class="activity-title">Debrief with Claude</div>
+          <div class="activity-time">10 min</div>
+        </div>
+        <div class="activity-desc">Whatever happened — win, lose, or negotiate — debrief. This is how you actually learn. Most people skip this step. Don't.</div>
+        <div class="activity-steps">
+          <div class="activity-step"><div class="step-num">1</div>Tell your AI how the pitch went and what questions were asked</div>
+          <div class="activity-step"><div class="step-num">2</div>Ask: "Based on what happened, what should I do differently next time I pitch something?"</div>
+          <div class="activity-step"><div class="step-num">3</div>Write down 3 things you learned this week — not about rooms, but about AI, money, and how to get what you want</div>
+        </div>
+        <div class="output-row"><div class="output-badge">Output</div> 3 real lessons learned — keep these</div>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- end panel-days -->
+
+
+<!-- ═══ AI TOOL PICKER ═══ -->
+<div id="panel-aitool" class="panel">
+  <div class="section-header">
+    <div class="section-title">PICK YOUR AI TOOL</div>
+    <div class="section-sub">All the prompts in this guide work with any AI. Pick one with your dad before Day 1 — or try a couple and see which you like better. There's no wrong answer.</div>
+  </div>
+
+  <div class="dad-joke" style="margin-bottom:24px;">
+    <div class="dad-joke-icon">👨</div>
+    <div class="dad-joke-text">Choosing an AI is like choosing a sandwich. They all do basically the same job, they each have a slightly different personality, and your dad will probably have a strong opinion about which one is correct. Talk it through. Then go with Claude. (Just kidding. Mostly.)</div>
+  </div>
+
+  <!-- Tool cards -->
+  <div class="tool-grid">
+
+    <!-- Claude -->
+    <div class="tool-card tool-claude">
+      <div class="tool-badge">Built This Guide</div>
+      <div class="tool-emoji">🟠</div>
+      <div class="tool-name">Claude</div>
+      <div class="tool-maker">by Anthropic · claude.ai</div>
+      <div class="tool-desc">Known for thoughtful, nuanced answers and really good at longer conversations where context builds up over time. Great at writing, explaining complex things clearly, and following detailed instructions.</div>
+      <div class="tool-best-label">Best for this project</div>
+      <div class="tool-best-item">✓ Writing the design brief</div>
+      <div class="tool-best-item">✓ Multi-day project conversations</div>
+      <div class="tool-best-item">✓ Pitch prep &amp; role-play</div>
+      <div class="tool-footer"><strong>Free:</strong> Yes &nbsp;·&nbsp; <strong>Sign-up:</strong> Email &nbsp;·&nbsp; <a href="https://claude.ai" target="_blank" class="tool-link tool-link-orange">claude.ai →</a></div>
+    </div>
+
+    <!-- Copilot -->
+    <div class="tool-card tool-copilot">
+      <div class="tool-emoji">🔵</div>
+      <div class="tool-name">Microsoft Copilot</div>
+      <div class="tool-maker">by Microsoft · copilot.microsoft.com</div>
+      <div class="tool-desc">Powered by the same technology as ChatGPT but built into Microsoft's ecosystem. Huge advantage: it can search the web in real time, so it can look up current furniture prices, products, and availability without you having to verify separately.</div>
+      <div class="tool-best-label">Best for this project</div>
+      <div class="tool-best-item">✓ Real-time product price research</div>
+      <div class="tool-best-item">✓ Looking up what's in stock now</div>
+      <div class="tool-best-item">✓ Easiest if you use a Microsoft account</div>
+      <div class="tool-footer"><strong>Free:</strong> Yes &nbsp;·&nbsp; <strong>Sign-up:</strong> Microsoft &nbsp;·&nbsp; <a href="https://copilot.microsoft.com" target="_blank" class="tool-link tool-link-blue">copilot.microsoft.com →</a></div>
+    </div>
+
+    <!-- ChatGPT -->
+    <div class="tool-card tool-chatgpt">
+      <div class="tool-emoji">🟢</div>
+      <div class="tool-name">ChatGPT</div>
+      <div class="tool-maker">by OpenAI · chatgpt.com</div>
+      <div class="tool-desc">The most widely used AI in the world — chances are you've already used it. Excellent all-around tool, widely documented online so it's easy to find tips. The free tier is solid, and upgrading unlocks image generation of room concepts.</div>
+      <div class="tool-best-label">Best for this project</div>
+      <div class="tool-best-item">✓ Most familiar to most people</div>
+      <div class="tool-best-item">✓ Image generation (paid tier)</div>
+      <div class="tool-best-item">✓ Tons of tutorials and help online</div>
+      <div class="tool-footer"><strong>Free:</strong> Yes &nbsp;·&nbsp; <strong>Sign-up:</strong> Email/Google &nbsp;·&nbsp; <a href="https://chatgpt.com" target="_blank" class="tool-link tool-link-green">chatgpt.com →</a></div>
+    </div>
+
+    <!-- Gemini -->
+    <div class="tool-card tool-gemini">
+      <div class="tool-emoji">🔴</div>
+      <div class="tool-name">Gemini</div>
+      <div class="tool-maker">by Google · gemini.google.com</div>
+      <div class="tool-desc">Google's AI, and the easiest to access if you already have a Google account (you probably do). Integrates natively with Google Docs, which makes saving your work each session extremely easy.</div>
+      <div class="tool-best-label">Best for this project</div>
+      <div class="tool-best-item">✓ Easiest if you have a Google account</div>
+      <div class="tool-best-item">✓ Works natively with Google Docs</div>
+      <div class="tool-best-item">✓ No new account needed</div>
+      <div class="tool-footer"><strong>Free:</strong> Yes &nbsp;·&nbsp; <strong>Sign-up:</strong> Google acct &nbsp;·&nbsp; <a href="https://gemini.google.com" target="_blank" class="tool-link tool-link-pink">gemini.google.com →</a></div>
+    </div>
+
+  </div>
+
+  <!-- Side-by-side comparison table -->
+  <div class="compare-wrap">
+    <div class="compare-title">QUICK COMPARISON</div>
+    <div class="compare-scroll">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th class="compare-th-feature">Feature</th>
+            <th class="compare-th" style="color:var(--orange)">Claude</th>
+            <th class="compare-th" style="color:var(--blue)">Copilot</th>
+            <th class="compare-th" style="color:var(--green)">ChatGPT</th>
+            <th class="compare-th" style="color:var(--pink)">Gemini</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="compare-row">
+            <td class="compare-td-feature">Free to use</td>
+            <td class="compare-td">✅</td><td class="compare-td">✅</td><td class="compare-td">✅</td><td class="compare-td">✅</td>
+          </tr>
+          <tr class="compare-row">
+            <td class="compare-td-feature">Searches web for prices</td>
+            <td class="compare-td compare-dim">⚡ Sometimes</td>
+            <td class="compare-td">✅ Always</td>
+            <td class="compare-td compare-dim">⚡ Sometimes</td>
+            <td class="compare-td compare-dim">⚡ Sometimes</td>
+          </tr>
+          <tr class="compare-row">
+            <td class="compare-td-feature">Remembers context mid-convo</td>
+            <td class="compare-td">✅ Strong</td><td class="compare-td">✅ Good</td><td class="compare-td">✅ Good</td><td class="compare-td">✅ Good</td>
+          </tr>
+          <tr class="compare-row">
+            <td class="compare-td-feature">Google Docs integration</td>
+            <td class="compare-td compare-dim">Manual copy</td>
+            <td class="compare-td compare-dim">Manual copy</td>
+            <td class="compare-td compare-dim">Manual copy</td>
+            <td class="compare-td" style="color:var(--green)">✅ Native</td>
+          </tr>
+          <tr class="compare-row">
+            <td class="compare-td-feature">Can generate room images</td>
+            <td class="compare-td compare-dim">Limited</td>
+            <td class="compare-td">✅ Yes</td>
+            <td class="compare-td compare-dim">Paid tier</td>
+            <td class="compare-td">✅ Yes</td>
+          </tr>
+          <tr>
+            <td class="compare-td-feature">Needs new account</td>
+            <td class="compare-td">Yes</td>
+            <td class="compare-td compare-dim">Microsoft</td>
+            <td class="compare-td">Yes</td>
+            <td class="compare-td" style="color:var(--green)">No (Google)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Dad's recommendation box -->
+  <div class="dad-rec-box">
+    <div class="dad-rec-title">💡 THE DAD RECOMMENDATION</div>
+    <div class="dad-rec-body">
+      Here's a genuinely useful take: <strong>use two tools</strong>. Use <strong>Copilot or Gemini for Day 3 shopping research</strong> (since they can look up real prices live), and use <strong>Claude or ChatGPT for everything else</strong> (design, writing, pitch prep, role-play). That way you get the best of both worlds — and you learn that different AI tools are better at different jobs. Which is actually a real, useful thing to know.<br><br>
+      <span class="dad-rec-footnote">And honestly — the prompts in this guide work with all of them. Try one, and if you don't like it, switch. It's not a marriage.</span>
+    </div>
+  </div>
+
+</div><!-- end panel-aitool -->
+
+
+<!-- ═══ PROMPTS ═══ -->
+<div id="panel-prompts" class="panel">
+  <div class="section-header">
+    <div class="section-title">STARTER PROMPTS</div>
+    <div class="section-sub">Click any prompt to copy it. Fill in the brackets and paste into whichever AI tool you picked. These are starting points — keep the conversation going after the first answer. That's where the good stuff is.</div>
+  </div>
+
+  <div class="info-box">
+    <strong>Pro tip:</strong> After every response, try asking "Is there anything important I didn't think to ask about?" You'll be surprised what your AI surfaces that you missed. These prompts work word-for-word in Claude, Copilot, ChatGPT, and Gemini.
+  </div>
+
+  <div class="prompt-group">
+    <div class="prompt-group-title">🟢 Day 1 — Getting Started</div>
+    <div class="prompt-card" onclick="copyThis(this)">
+      <div class="copy-tag">click to copy</div>
+      <div class="prompt-card-label">Design Brief Kickoff</div>
+      <div class="prompt-card-text">I want to redesign my bedroom and I want you to be my design consultant for the next week. Here's what I'm working with: my room is <em>[X ft × Y ft]</em>, ceiling height is <em>[height]</em>. Currently in the room: <em>[list everything]</em>. My total budget is <em>$350</em>. Things that MUST stay: <em>[anything that can't move or be replaced]</em>. The vibe I want is <em>[describe — gaming / minimal / cozy / dark / etc.]</em>. Help me write a one-page design brief I can use as our reference document all week. Be specific, not generic.</div>
+    </div>
+    <div class="prompt-card" onclick="copyThis(this)">
+      <div class="copy-tag">click to copy</div>
+      <div class="prompt-card-label">The Bad Prompt Experiment</div>
+      <div class="prompt-card-text">I want to learn why context matters in AI prompting. First, answer this with zero extra information: "redesign my room." Then I'm going to give you my full design brief and ask the same thing. I want to compare both answers and understand exactly why one is better than the other.</div>
+    </div>
+  </div>
+
+  <div class="prompt-group">
+    <div class="prompt-group-title">🔵 Day 2 — Layout Design</div>
+    <div class="prompt-card" onclick="copyThis(this)">
+      <div class="copy-tag">click to copy</div>
+      <div class="prompt-card-label">Generate 3 Layouts</div>
+      <div class="prompt-card-text">Based on my design brief, give me 3 completely different layout options for my room. I mean genuinely different — not just small variations. For each one: describe exactly where the bed, desk, storage, and seating go. Then give me 2 things that make this layout work well and 1 real downside I should know before choosing it.</div>
+    </div>
+    <div class="prompt-card" onclick="copyThis(this)">
+      <div class="copy-tag">click to copy</div>
+      <div class="prompt-card-label">Push Back on a Layout</div>
+      <div class="prompt-card-text">I like layout #<em>[number]</em> overall but I want to change: <em>[describe exactly what you don't like and why]</em>. Can you redesign just that part while keeping everything else? Show me the updated version and explain specifically how your change fixes the problem I described.</div>
+    </div>
+    <div class="prompt-card" onclick="copyThis(this)">
+      <div class="copy-tag">click to copy</div>
+      <div class="prompt-card-label">Room Planner Translation</div>
+      <div class="prompt-card-text">I'm using <em>[Roomstyler / Planner 5D]</em> to mock up my room layout. Based on the layout we just designed, give me step-by-step placement instructions I can follow in the tool — starting from entering the room dimensions and going through each piece of furniture in the right order.</div>
+    </div>
+  </div>
+
+  <div class="prompt-group">
+    <div class="prompt-group-title">🟡 Day 3 — Budget & Shopping</div>
+    <div class="prompt-card" onclick="copyThis(this)">
+      <div class="copy-tag">click to copy</div>
+      <div class="prompt-card-label">Budget Basics</div>
+      <div class="prompt-card-text">Explain budgeting to me like I'm a smart 15-year-old doing this for the first time with $350. Cover: needs vs. wants, what a contingency fund is and why $35 of my $350 should be untouchable, how to prioritize when I can't afford everything, and the single biggest mistake first-time budgeters make.</div>
+    </div>
+    <div class="prompt-card" onclick="copyThis(this)">
+      <div class="copy-tag">click to copy</div>
+      <div class="prompt-card-label">Product Research</div>
+      <div class="prompt-card-text">I need a <em>[bed frame / desk / shelving unit / lamp]</em>. Space available: <em>[dimensions]</em>. My budget for just this item is <em>[$___]</em>. Style: <em>[describe]</em>. Give me 3 options — budget, mid-range, and one slightly over budget worth considering. For each: estimated price range, where to find it (IKEA / Amazon / Target / Wayfair), dimensions, and a quick pros vs cons. Note: I'll verify all real prices myself before trusting them.</div>
+    </div>
+    <div class="prompt-card" onclick="copyThis(this)">
+      <div class="copy-tag">click to copy</div>
+      <div class="prompt-card-label">The Worth It? Test</div>
+      <div class="prompt-card-text">Here's my current shopping list with estimated prices: <em>[paste your list]</em>. My real budget is $315 (keeping $35 as contingency). For each item: is it a need or want? And what's a smarter alternative that costs less without killing the vibe? Help me get under $315 by cutting or swapping things that don't earn their price tag.</div>
+    </div>
+  </div>
+
+  <div class="prompt-group">
+    <div class="prompt-group-title">🟠 Day 4 — Style</div>
+    <div class="prompt-card" onclick="copyThis(this)">
+      <div class="copy-tag">click to copy</div>
+      <div class="prompt-card-label">Find Your Style</div>
+      <div class="prompt-card-text">Describe 5 bedroom design styles that work well for a 15-year-old. For each: the name, a specific 3-color palette (actual color names, not vague descriptions like "earth tones"), the key furniture pieces that define it, the type of lighting it uses, and a one-sentence vibe description. Be specific enough that I can actually picture each one.</div>
+    </div>
+    <div class="prompt-card" onclick="copyThis(this)">
+      <div class="copy-tag">click to copy</div>
+      <div class="prompt-card-label">Lighting 101</div>
+      <div class="prompt-card-text">Teach me about bedroom lighting from a design perspective. Explain ambient, task, and accent lighting and what each one actually does to a room. Then suggest 3 specific, affordable lighting options (under $40 each) that would work for a <em>[your style]</em> bedroom. Tell me what mood each one creates and where in the room it should go.</div>
+    </div>
+  </div>
+
+  <div class="prompt-group">
+    <div class="prompt-group-title">🔴 Days 6–7 — The Pitch</div>
+    <div class="prompt-card" onclick="copyThis(this)">
+      <div class="copy-tag">click to copy</div>
+      <div class="prompt-card-label">Objection Prep</div>
+      <div class="prompt-card-text">I'm pitching a $350 bedroom redesign to my parents. What are the 5 toughest, most skeptical questions they're likely to ask? For each one, help me write a smart, honest response — one that actually addresses their concern head-on rather than dodging it. Also help me prepare a scaled-back "Phase 1" version in case they say the full plan is too much at once.</div>
+    </div>
+    <div class="prompt-card" onclick="copyThis(this)">
+      <div class="copy-tag">click to copy</div>
+      <div class="prompt-card-label">Skeptical Dad Role-Play</div>
+      <div class="prompt-card-text">I want to practice my pitch before I do it for real. Play the role of a skeptical-but-fair parent who cares about value and isn't just handing over money. Ask me one tough question at a time — pause between each one so I can answer. After my answer, tell me honestly: was that convincing? What would have landed better? Don't go easy on me.</div>
+    </div>
+    <div class="prompt-card" onclick="copyThis(this)">
+      <div class="copy-tag">click to copy</div>
+      <div class="prompt-card-label">Post-Pitch Debrief</div>
+      <div class="prompt-card-text">I just pitched my bedroom redesign to my parents. Here's what happened: <em>[describe how it went — what they said, what questions they asked, what the outcome was, anything that surprised you]</em>. What did I do well? What should I have done differently? Give me 3 specific lessons from this that I could apply to any future pitch, negotiation, or presentation — not just bedroom stuff.</div>
+    </div>
+  </div>
+
+</div><!-- end panel-prompts -->
+
+
+<!-- ═══ SKILLS ═══ -->
+<div id="panel-skills" class="panel">
+  <div class="section-header">
+    <div class="section-title">SKILLS YOU'LL BUILD</div>
+    <div class="section-sub">Six AI skills and five life skills. All real. All useful long after this room is done.</div>
+  </div>
+
+  <div class="dad-joke" style="margin-bottom:24px;">
+    <div class="dad-joke-icon">👨</div>
+    <div class="dad-joke-text">Why did the dad make his kid do a bedroom redesign project? Because knowing how to prompt an AI, build a budget, and pitch an idea is worth more than any class you'll take this year. Also the room needed new shelves. Two birds, one stone. <em>Classic dad move.</em></div>
+  </div>
+
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-top"><div class="skill-emoji">🎯</div><div class="skill-level level-beginner">Day 1</div></div>
+      <div class="skill-name">Context-Giving</div>
+      <div class="skill-desc">The #1 AI skill. AI is only as good as what you tell it. You'll prove this yourself on Day 1 with the Bad Prompt Test — the difference is genuinely shocking.</div>
+      <div class="skill-used">Used on: <span>Design Brief</span><span>Bad Prompt Test</span></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-top"><div class="skill-emoji">🔁</div><div class="skill-level level-core">Day 2</div></div>
+      <div class="skill-name">Iterative Prompting</div>
+      <div class="skill-desc">The first answer is never final. Real AI power users treat every response as a starting point — they push back, redirect, and refine until the output is actually theirs.</div>
+      <div class="skill-used">Used on: <span>Layout Options</span><span>Push-Back Game</span></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-top"><div class="skill-emoji">🔍</div><div class="skill-level level-core">Day 3</div></div>
+      <div class="skill-name">Verify Before Trusting</div>
+      <div class="skill-desc">AI makes stuff up with total confidence. It's called "hallucination" and it's a real thing. Always verify prices, facts, and specs from a real source before trusting them.</div>
+      <div class="skill-used">Used on: <span>Shopping Research</span><span>Price Hunt</span></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-top"><div class="skill-emoji">💬</div><div class="skill-level level-core">Day 4</div></div>
+      <div class="skill-name">Format Control</div>
+      <div class="skill-desc">Tell AI exactly how you want its output — tables, bullet points, numbered steps, one-page docs. Asking for a specific format makes responses 10x more usable.</div>
+      <div class="skill-used">Used on: <span>Style Research</span><span>Comparison Tables</span></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-top"><div class="skill-emoji">🎭</div><div class="skill-level level-advanced">Day 6</div></div>
+      <div class="skill-name">Role-Play Prompting</div>
+      <div class="skill-desc">Give Claude a character to play — "act like a skeptical parent," "be a tough design critic" — and it adjusts accordingly. Powerful for practice, brainstorming, and stress-testing ideas.</div>
+      <div class="skill-used">Used on: <span>Pitch Practice</span><span>Objection Prep</span></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-top"><div class="skill-emoji">🧠</div><div class="skill-level level-advanced">Day 7</div></div>
+      <div class="skill-name">AI as Thought Partner</div>
+      <div class="skill-desc">The most advanced use of AI: not asking it for answers, but using it to think better — challenge your own assumptions, find the holes in your logic, and extract lessons from what happened.</div>
+      <div class="skill-used">Used on: <span>Pitch Debrief</span><span>Lessons Learned</span></div>
+    </div>
+  </div>
+
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px;">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:0.03em;margin-bottom:14px;color:var(--muted2)">LIFE SKILLS UNLOCKED THIS WEEK</div>
+    <div class="life-grid">
+      <div class="life-card">💰 <strong>Budgeting</strong><span>Needs vs. wants, contingency, priorities</span></div>
+      <div class="life-card">🛒 <strong>Smart Shopping</strong><span>Compare, verify, time your purchase</span></div>
+      <div class="life-card">🎤 <strong>Pitching</strong><span>Anticipate objections, persuade clearly</span></div>
+      <div class="life-card">📐 <strong>Spatial Planning</strong><span>Measure, map, and plan a real space</span></div>
+      <div class="life-card">🔁 <strong>Decision-Making</strong><span>Compare options, make real tradeoffs</span></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══ BUDGET ═══ -->
+<div id="panel-budget" class="panel">
+  <div class="section-header">
+    <div class="section-title">BUDGET TRACKER</div>
+    <div class="section-sub">Your total budget is $350. The first thing you should do is add a "Contingency Buffer" line for $35 — then work with the remaining $315. Only enter prices you've personally verified on a real store's website.</div>
+  </div>
+
+  <div class="dad-joke" style="margin-bottom:20px;">
+    <div class="dad-joke-icon">👨</div>
+    <div class="dad-joke-text">A budget without a contingency is like a road trip without a spare tire. Everything's fine until it suddenly, very much isn't. Add the $35 buffer. <em>Trust the process.</em></div>
+  </div>
+
+  <div class="budget-wrapper">
+    <div class="budget-top">
+      <div>
+        <div class="budget-heading">Bryce's Room Budget</div>
+        <div class="budget-sub">$350 total · Only verified prices allowed · Add contingency first</div>
+      </div>
+      <div class="budget-total-display">
+        <div class="budget-remaining-label">Remaining</div>
+        <div class="budget-remaining-num" id="remainingNum">$350</div>
+      </div>
+    </div>
+
+    <div class="budget-bar-wrap">
+      <div class="budget-bar-fill" id="budgetBarFill" style="width:0%"></div>
+    </div>
+    <div class="budget-meta">
+      <span id="spentLabel">$0 spent of $350</span>
+      <span id="pctLabel">0% used</span>
+    </div>
+
+    <div class="budget-items" id="budgetItems">
+      <div style="font-size:13px;color:var(--muted);padding:8px 0;">No items yet. Add your contingency buffer first, then start building your list.</div>
+    </div>
+
+    <div class="budget-actions">
+      <button class="btn btn-green" onclick="addItem()">+ Add Item</button>
+      <button class="btn btn-outline" onclick="addContingency()">+ Add $35 Contingency</button>
+      <button class="btn btn-outline" onclick="clearItems()">Clear All</button>
+    </div>
+
+    <div class="budget-breakdown" id="budgetBreakdown" style="display:none">
+      <div class="breakdown-title">Budget Summary</div>
+      <div class="breakdown-grid">
+        <div class="breakdown-box"><div class="breakdown-num" id="bTotalBudget" style="color:var(--blue)">$350</div><div class="breakdown-label">Total Budget</div></div>
+        <div class="breakdown-box"><div class="breakdown-num" id="bSpent" style="color:var(--orange)">$0</div><div class="breakdown-label">Committed</div></div>
+        <div class="breakdown-box"><div class="breakdown-num" id="bLeft" style="color:var(--green)">$350</div><div class="breakdown-label">Remaining</div></div>
+      </div>
+    </div>
+
+    <div class="budget-tips">
+      <strong>💡 The $350 Rules:</strong><br>
+      1. Add a <strong>$35 contingency</strong> line before anything else — something always costs more than expected.<br>
+      2. That means your real shopping budget is <strong>$315</strong>.<br>
+      3. Label each item Need or Want — Needs get funded first.<br>
+      4. <strong>Never enter a price until you've verified it yourself</strong> on a real store website. AI prices can be wrong.
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══ CHECKLIST ═══ -->
+<div id="panel-checklist" class="panel">
+  <div class="section-header">
+    <div class="section-title">BEFORE YOU START</div>
+    <div class="section-sub">Complete these before Day 1. Don't skip the physical ones — they're not optional busywork, they're the foundation for everything else.</div>
+  </div>
+
+  <div class="dad-joke" style="margin-bottom:20px;">
+    <div class="dad-joke-icon">👨</div>
+    <div class="dad-joke-text">Why did the teenager not measure his room first? He didn't. He just guessed. The AI gave him a beautiful design for a room that was 4 feet too small and had a window in the wrong wall. Don't be that guy. <em>Measure the room.</em></div>
+  </div>
+
+  <div class="checklist-group">
+    <div class="checklist-group-title">📐 Physical Prep (Get Off the Phone for This One)</div>
+    <div class="check-item" data-key="chk-measure-room" onclick="toggleChk(this)"><div class="chkbox"></div><div><div class="check-label">Measure room length and width</div><div class="check-note">Feet AND inches. Tape measure only — phone apps aren't accurate enough.</div></div></div>
+    <div class="check-item" data-key="chk-ceiling" onclick="toggleChk(this)"><div class="chkbox"></div><div><div class="check-label">Measure ceiling height</div><div class="check-note">Matters if you're considering a loft bed, bunk, or tall shelving.</div></div></div>
+    <div class="check-item" data-key="chk-windows-doors" onclick="toggleChk(this)"><div class="chkbox"></div><div><div class="check-label">Note all window and door locations</div><div class="check-note">Which wall? How wide? Which way does the door swing open?</div></div></div>
+    <div class="check-item" data-key="chk-outlets" onclick="toggleChk(this)"><div class="chkbox"></div><div><div class="check-label">Find all electrical outlets</div><div class="check-note">Outlets determine where desks and entertainment setups can realistically go.</div></div></div>
+    <div class="check-item" data-key="chk-photos" onclick="toggleChk(this)"><div class="chkbox"></div><div><div class="check-label">Photograph each wall</div><div class="check-note">From the corners of the room. You'll reference these photos all week.</div></div></div>
+    <div class="check-item" data-key="chk-floorplan" onclick="toggleChk(this)"><div class="chkbox"></div><div><div class="check-label">Sketch a rough floor plan on paper</div><div class="check-note">Bird's-eye view. Doesn't have to be perfect — just accurate.</div></div></div>
+  </div>
+
+  <div class="checklist-group">
+    <div class="checklist-group-title">💬 Conversations to Have First</div>
+    <div class="check-item" data-key="chk-budget-confirm" onclick="toggleChk(this)"><div class="chkbox"></div><div><div class="check-label">Confirm the $350 budget is real and agreed on</div><div class="check-note">You know the number. Confirm there are no surprises before you plan around it.</div></div></div>
+    <div class="check-item" data-key="chk-staying-list" onclick="toggleChk(this)"><div class="chkbox"></div><div><div class="check-label">List what's staying vs. what can be replaced or moved</div><div class="check-note">Some furniture may be off limits. Know before you design around it.</div></div></div>
+    <div class="check-item" data-key="chk-rules" onclick="toggleChk(this)"><div class="chkbox"></div><div><div class="check-label">Ask about any rules (paint, holes in walls, etc.)</div><div class="check-note">Know your constraints before you build a design that depends on painting the walls.</div></div></div>
+  </div>
+
+  <div class="checklist-group">
+    <div class="checklist-group-title">🧠 Personal Prep (5 Minutes, Actually Worth It)</div>
+    <div class="check-item" data-key="chk-3words" onclick="toggleChk(this)"><div class="chkbox"></div><div><div class="check-label">Write down 3 words that describe your dream room</div><div class="check-note">Be honest. Not what sounds cool — what you actually want to wake up in every day.</div></div></div>
+    <div class="check-item" data-key="chk-3bugs" onclick="toggleChk(this)"><div class="chkbox"></div><div><div class="check-label">List the 3 things that bug you most about your current room</div><div class="check-note">These become your design goals. Specific problems = specific solutions.</div></div></div>
+    <div class="check-item" data-key="chk-inspo" onclick="toggleChk(this)"><div class="chkbox"></div><div><div class="check-label">Find 3 rooms online you genuinely like the look of</div><div class="check-note">Pinterest, Google Images, Reddit r/malelivingspace. Save the links before Day 1.</div></div></div>
+  </div>
+
+  <div class="checklist-group">
+    <div class="checklist-group-title">💻 Tech Setup (Actually Easy)</div>
+    <div class="check-item" data-key="chk-ai-tool" onclick="toggleChk(this)"><div class="chkbox"></div><div><div class="check-label">Pick your AI tool (see "Pick Your AI" tab) and get access</div><div class="check-note">Claude, Copilot, and ChatGPT are all free to start. See the Pick Your AI tab to choose.</div></div></div>
+    <div class="check-item" data-key="chk-google-doc" onclick="toggleChk(this)"><div class="chkbox"></div><div><div class="check-label">Create a Google Doc to save your work</div><div class="check-note">Copy your brief, layouts, and shopping list in here after each session.</div></div></div>
+    <div class="check-item" data-key="chk-room-planner" onclick="toggleChk(this)"><div class="chkbox"></div><div><div class="check-label">Bookmark roomstyler.com or planner5d.com for Day 2</div><div class="check-note">Both free. You'll use one of these to visualize your layout.</div></div></div>
+  </div>
+
+</div><!-- end checklist -->
+
+</div><!-- end content -->
+
+<!-- Supabase UMD — loads as window.supabase, no module scoping issues -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+// ─────────────────────────────────────────────
+// SUPABASE CONFIG — replace these two values
+// ─────────────────────────────────────────────
+const SUPABASE_URL     = 'YOUR_SUPABASE_URL';
+const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// ─── SYNC STATUS ──────────────────────────────
+function setSyncStatus(state) {
+  const el = document.getElementById('syncStatus');
+  if (!el) return;
+  const map = {
+    synced:  { icon: '☁️', text: 'Synced',                            color: 'var(--green)'  },
+    saving:  { icon: '⏳', text: 'Saving…',                           color: 'var(--yellow)' },
+    error:   { icon: '⚠️', text: 'Sync error — changes saved locally', color: 'var(--orange)' },
+    offline: { icon: '📴', text: 'Offline — changes saved locally',    color: 'var(--muted)'  },
+  };
+  const s = map[state] || map.synced;
+  el.innerHTML = `<span style="color:${s.color};font-size:12px;font-weight:600;">${s.icon} ${s.text}</span>`;
+}
+
+// ─── NAV / DAY TOGGLES / COPY ─────────────────
+function switchPanel(name, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+
+function toggleDay(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+async function copyThis(el) {
+  const clone = el.cloneNode(true);
+  clone.querySelector('.copy-tag')?.remove();
+  clone.querySelector('.prompt-card-label')?.remove();
+  const text = clone.innerText.trim();
+  try {
+    await navigator.clipboard.writeText(text);
+    el.classList.add('copied');
+    const tag = el.querySelector('.copy-tag');
+    tag.textContent = '✓ Copied!';
+    tag.style.opacity = 1;
+    tag.style.color = 'var(--green)';
+    setTimeout(() => {
+      el.classList.remove('copied');
+      tag.textContent = 'click to copy';
+      tag.style.opacity = '';
+      tag.style.color = '';
+    }, 2000);
+  } catch(e) {}
+}
+
+// ─── CHECKLIST SYNC ───────────────────────────
+async function loadChecklist() {
+  try {
+    const { data, error } = await sb.from('checklist_state').select('*');
+    if (error) throw error;
+    const checked = new Set((data || []).filter(r => r.checked).map(r => r.id));
+    document.querySelectorAll('.check-item[data-key]').forEach(el => {
+      const isDone = checked.has(el.dataset.key);
+      el.classList.toggle('done', isDone);
+      el.querySelector('.chkbox').textContent = isDone ? '✓' : '';
+    });
+    setSyncStatus('synced');
+  } catch(e) {
+    setSyncStatus('offline');
+  }
+}
+
+async function toggleChk(el) {
+  el.classList.toggle('done');
+  const isDone = el.classList.contains('done');
+  el.querySelector('.chkbox').textContent = isDone ? '✓' : '';
+  const key = el.dataset.key;
+  if (!key) return;
+  setSyncStatus('saving');
+  try {
+    const { error } = await sb.from('checklist_state')
+      .upsert({ id: key, checked: isDone }, { onConflict: 'id' });
+    if (error) throw error;
+    setSyncStatus('synced');
+  } catch(e) { setSyncStatus('error'); }
+}
+
+// ─── BUDGET SYNC ──────────────────────────────
+const TOTAL = 350;
+let items = [];
+let saveTimer = null;
+
+async function loadBudget() {
+  try {
+    const { data, error } = await sb
+      .from('budget_items').select('*')
+      .order('sort_order', { ascending: true });
+    if (error) throw error;
+    items = (data || []).map(r => ({ id: r.id, name: r.name || '', price: r.price != null ? r.price.toString() : '' }));
+    renderItems();
+    recalc();
+    setSyncStatus('synced');
+  } catch(e) { setSyncStatus('offline'); }
+}
+
+function scheduleSave() {
+  setSyncStatus('saving');
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(saveAllItems, 800);
+}
+
+async function saveAllItems() {
+  try {
+    await sb.from('budget_items').delete().neq('id', '__never__');
+    if (items.length) {
+      const rows = items.map((item, i) => ({
+        id: item.id.toString(),
+        name: item.name,
+        price: parseFloat(item.price) || 0,
+        sort_order: i,
+      }));
+      const { error } = await sb.from('budget_items').insert(rows);
+      if (error) throw error;
+    }
+    setSyncStatus('synced');
+  } catch(e) { setSyncStatus('error'); }
+}
+
+function subscribeToChanges() {
+  sb.channel('budget_changes')
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'budget_items' }, loadBudget)
+    .subscribe();
+  sb.channel('checklist_changes')
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'checklist_state' }, loadChecklist)
+    .subscribe();
+}
+
+// ─── BUDGET UI ────────────────────────────────
+function addItem(name, price) {
+  name  = name  !== undefined ? name  : '';
+  price = price !== undefined ? price : '';
+  items.push({ id: Date.now().toString(), name, price });
+  renderItems();
+  recalc();
+  scheduleSave();
+}
+
+function addContingency() {
+  addItem('🛡️ Contingency Buffer', '35');
+}
+
+function removeItem(id) {
+  items = items.filter(i => i.id !== id);
+  renderItems();
+  recalc();
+  scheduleSave();
+}
+
+function renderItems() {
+  const c = document.getElementById('budgetItems');
+  if (!items.length) {
+    c.innerHTML = '<div style="font-size:13px;color:var(--muted);padding:8px 0;">No items yet. Add your contingency buffer first, then start building your list.</div>';
+    return;
+  }
+  c.innerHTML = items.map(item => `
+    <div class="budget-row">
+      <input type="text" placeholder="Item name (verified from real store)"
+             value="${(item.name || '').replace(/"/g, '&quot;')}"
+             oninput="updateItem('${item.id}', 'name', this.value)">
+      <input type="number" placeholder="$0" value="${item.price}" min="0"
+             oninput="updateItem('${item.id}', 'price', this.value)">
+      <button class="budget-del" onclick="removeItem('${item.id}')" title="Remove">✕</button>
+    </div>
+  `).join('');
+}
+
+function updateItem(id, field, value) {
+  const item = items.find(i => i.id === id);
+  if (item) { item[field] = value; recalc(); scheduleSave(); }
+}
+
+async function clearItems() {
+  if (!items.length) return;
+  if (!confirm('Clear all items? This will sync to all devices.')) return;
+  items = [];
+  renderItems();
+  recalc();
+  await saveAllItems();
+}
+
+function recalc() {
+  const spent     = items.reduce((s, i) => s + (parseFloat(i.price) || 0), 0);
+  const remaining = TOTAL - spent;
+  const pct       = Math.min((spent / TOTAL) * 100, 100);
+  const over      = remaining < 0;
+
+  document.getElementById('remainingNum').textContent = (over ? '-$' : '$') + Math.abs(remaining).toFixed(0);
+  document.getElementById('remainingNum').style.color = over ? 'var(--red)' : pct > 85 ? 'var(--orange)' : 'var(--green)';
+  document.getElementById('budgetBarFill').style.width = pct + '%';
+  document.getElementById('budgetBarFill').style.background = over
+    ? 'var(--red)'
+    : pct > 85
+      ? 'linear-gradient(90deg, var(--orange), var(--red))'
+      : 'linear-gradient(90deg, var(--green), var(--teal))';
+  document.getElementById('spentLabel').textContent = '$' + spent.toFixed(0) + ' spent of $' + TOTAL;
+  document.getElementById('pctLabel').textContent   = Math.round(pct) + '% used' + (over ? ' ⚠️ OVER BUDGET' : '');
+
+  const bd = document.getElementById('budgetBreakdown');
+  bd.style.display = items.length ? 'block' : 'none';
+  document.getElementById('bSpent').textContent = '$' + spent.toFixed(0);
+  document.getElementById('bLeft').textContent  = (over ? '-$' : '$') + Math.abs(remaining).toFixed(0);
+  document.getElementById('bLeft').style.color  = over ? 'var(--red)' : 'var(--green)';
+}
+
+// ─── INIT ─────────────────────────────────────
+window.addEventListener('online',  function() { loadBudget(); loadChecklist(); });
+window.addEventListener('offline', function() { setSyncStatus('offline'); });
+
+document.addEventListener('DOMContentLoaded', async function() {
+  setSyncStatus('saving');
+  await Promise.all([loadBudget(), loadChecklist()]);
+  subscribeToChanges();
+});
+</script>
+</body>
+</html>
